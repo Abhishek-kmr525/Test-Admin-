@@ -1,0 +1,17 @@
+---
+deployment:
+  tasks:
+    # Set deploy path to your cPanel web root for this site
+    - export DEPLOYPATH=/home/qcidb7kof599/public_html/freereminders.net/test2
+
+    # Use rsync if available (better sync, removes deleted files too)
+    - |
+      if command -v rsync >/dev/null 2>&1; then
+        rsync -av --delete \
+          --exclude='.git' \
+          --exclude='.env' \
+          --exclude='node_modules' \
+          ./ $DEPLOYPATH
+      else
+        /bin/cp -a ./* $DEPLOYPATH
+      fi
