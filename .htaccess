@@ -1,0 +1,23 @@
+# admin/.htaccess
+RewriteEngine On
+
+# Block access to sensitive files
+<Files "*.sql">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+<Files "*.md">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Optional: IP restriction (uncomment and add your IP)
+# <RequireAll>
+#     Require ip 192.168.1.0/24
+#     Require ip your.static.ip.here
+# </RequireAll>
+
+# Force HTTPS (recommended)
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
